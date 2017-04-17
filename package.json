@@ -1,0 +1,19 @@
+{
+  "name": "xkcd-telegram-bot",
+  "version": "1.0.0",
+  "description": "A telegram bot to fetch XKCD comics.",
+  "main": "bot.js",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "node-telegram-bot-api": "^0.27.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0",
+    "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John DiIorio"
+}
