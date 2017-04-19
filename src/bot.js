@@ -76,3 +76,7 @@ bot.on('inline_query', (msg) => {
 		console.log(`ERROR: failure in inline_query: ${msg.query}`);
 	}
 });
+
+bot.on('polling_error', (error) => {
+
+});
