@@ -16,7 +16,7 @@ bot.onText(/\/xkcd (.+)/, (msg, match) => {
 			});
 		}
 	} catch (e) {
-		console.log(e);
+		console.log(`ERROR: failure in onText(): ${match[1]}`);
 	}
 });
 
@@ -46,7 +46,6 @@ bot.on('inline_query', (msg) => {
 						thumb_url: image,
 					});
 					bot.answerInlineQuery(msg.id, inlineQueryResults);
-					console.log(`Successfully responded to: ${msg.query}`);
 				} else { // request is not an exact title match
 					let dbQuery = 'SELECT url FROM comics WHERE';
 					const words = msg.query.split(" ");
@@ -67,13 +66,13 @@ bot.on('inline_query', (msg) => {
 								});
 							}
 							bot.answerInlineQuery(msg.id, inlineQueryResults);
-							console.log(`Successfully responded to: ${msg.query}`);
 						}
 					});
 				}
 			});
 		}
+		console.log(msg);
 	} catch (e) {
-		console.log(`Failed to respond to: ${msg.query}`);
+		console.log(`ERROR: failure in inline_query: ${msg.query}`);
 	}
 });
