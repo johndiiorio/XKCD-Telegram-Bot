@@ -35,7 +35,7 @@ bot.on('inline_query', (msg) => {
 				}
 			});
 		} else { // incoming request is a string
-			db.all(`SELECT url FROM comics WHERE lower(title) = lower('${msg.query}')`, (err, rows) => {
+			db.all(`SELECT url FROM comics WHERE lower(title) = lower(?)`, [msg.query], (err, rows) => {
 				if (rows !== undefined && rows.length === 1) { // request is an exact title match
 					const image = rows[0].url;
 					const inlineQueryResults = [];
@@ -50,10 +50,10 @@ bot.on('inline_query', (msg) => {
 					let dbQuery = 'SELECT url FROM comics WHERE';
 					const words = msg.query.split(" ");
 					for (let [index, word] of words.entries()) {
-						if (index === 0) dbQuery += ` lower(title) LIKE lower('%${word}%') OR lower(transcript) LIKE lower('%${word}%')`;
-						else dbQuery += ` OR lower(title) LIKE lower('%${word}%') OR lower(transcript) LIKE lower('%${word}%')`;
+						if (index === 0) dbQuery += ` lower(title) LIKE lower($text) OR lower(transcript) LIKE lower($text)`;
+						else dbQuery += ` OR lower(title) LIKE lower($text) OR lower(transcript) LIKE lower($text)`;
 					}
-					db.all(dbQuery, (err, rows) => {
+					db.all(dbQuery, { $text: `%${msg.query}%` }, (err, rows) => {
 						if (rows !== undefined && rows.length > 0) {
 							const images = rows.slice(0, 4).map(row => row.url); // only return 4 images
 							const inlineQueryResults = [];
