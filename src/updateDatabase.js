@@ -18,7 +18,7 @@ async function updateDatabase() {
 	db.serialize(async () => {
 		db.run(readSQLFile("./src/sql/create_tables.sql"));
 		db.all("SELECT max(id) FROM comics", async (err, rows) => {
-			for (let i = rows[0]['max(id)'] ? rows[0]['max(id)'] : 1; i < numComics; i++) {
+			for (let i = rows[0]['max(id)'] ? rows[0]['max(id)'] : 1; i <= numComics; i++) {
 				if (i === 404) i = 405; // skip 404 comic
 				const currResponseRaw = await getRequest(i);
 				const currResponse = JSON.parse(currResponseRaw);
